@@ -74,3 +74,8 @@ testerPar <- function(i,j,k,l){
  #C <- parMatMultTropMax(cl,A,B)
  C
 }
+
+isAMetric <- function(D){
+ eachij<-serMatMultTropMin(D,D)==D
+ all(eachij)
+}
