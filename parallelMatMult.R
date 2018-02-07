@@ -79,3 +79,34 @@ isAMetric <- function(D){
  eachij<-serMatMultTropMin(D,D)==D
  all(eachij)
 }
+
+isATreeMetric <- function(D,n){
+	if (!isAMetric(D)){
+		return(FALSE)
+	}
+ 	for (i in 1:(n-3)){
+		for (j in (i+1):(n-2)){
+			for (k in (j+1):(n-1)){
+				for (l in (k+1):(n-0)){
+					max1 <- D[i,j]+D[k,l]
+					max2 <- D[i,k]+D[j,l]
+					max3 <- D[i,l]+D[j,k]
+					maxAll <- max(max1,max2,max3)
+					ijklCheck <- (((maxAll==max1) + (maxAll==max2) + (maxAll==max3))>=2)
+					print(paste0("Current p_ijkl: ", ijklCheck))
+					if (!ijklCheck){
+						return(FALSE)
+					}
+				}
+			}
+		}
+	}
+	return(TRUE)
+}
+
+# Human,Mouse,Rat, Chicken example
+D = matrix( 
+c(0, 1.1, 1.0, 1.4, 1.1, 0, .3, 1.3, 1.0, .3, 0, 1.2, 1.4, 1.3, 1.2, 0), # the data elements 
+nrow=4,              # number of rows 
+ncol=4,              # number of columns 
+byrow = TRUE)        # fill matrix by rows 
